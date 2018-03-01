@@ -3,7 +3,6 @@ var ww = window.innerWidth,
   wh = window.innerHeight;
 
 function init(){
-
   /* WEBGL RENDERER */
 
   //Create the webGl renderer from Three
@@ -17,7 +16,6 @@ function init(){
 
   //Create my scene
   scene = new THREE.Scene();
-
 
   /* WINDOW RESIZE */
   window.addEventListener( 'resize', onWindowResize, false );
@@ -49,17 +47,11 @@ function init(){
   //Create our sphere
   createSphere();
 
-
-  // //This is very important, it will ask the renderer to render our scene
-  // renderer.render(scene,camera);
-
-
-
 };
 
 
 function createSphere() {
-  var geometry = new THREE.SphereBufferGeometry(100, 30, 30);
+  var geometry = new THREE.SphereBufferGeometry(50, 30, 30);
   var material = new THREE.MeshLambertMaterial({
     color: 0xfccdd3
   });
@@ -70,24 +62,34 @@ function createSphere() {
 
 };
 
-var dxPerFrame = 1;
+var dxPerFrame = 2;
+var dyPerFrame = 2;
+
 
 //rotate and translate the sphere
 
 function animate() {
-
     requestAnimationFrame(animate);
-
     move()
 
     renderer.render( scene, camera );
-
 }
 
 function move(x) {
-  sphere.position.x += dxPerFrame; // move ball
+  console.log(dxPerFrame);
+  //sphere.position.x += dxPerFrame; // move ball
+  //sphere.position.y += dyPerFrame; // move ball
+
+/*
   if(sphere.position.x >  100) dxPerFrame = -1; // if we're too far right, move towards the left
   if(sphere.position.x < -100) dxPerFrame =  1; // if we're too far left, move towards the right again
+  if(sphere.position.y >  100) dyPerFrame = -1; // if we're too far right, move towards the left
+  if(sphere.position.y < -100) dyPerFrame =  1; // if we're too far left, move towards the right again
+*/
+}
+
+function position(x){
+  sphere.position.x = x;
 }
 
 
@@ -100,3 +102,37 @@ function onWindowResize() {
 //Initialize our scene
 init();
 animate();
+
+function handleOrientation(event) {
+  let y = event.beta;
+  let x = event.gamma;
+
+  //TODO MAke this incremental
+  yInc = 2;
+  xInc = 2;
+
+  if (y > 55) {
+    sphere.position.y= parseInt(sphere.position.y) - (yInc);
+  }
+  else if ( y < 35) {
+    sphere.position.y = parseInt(sphere.position.y) + (yInc);
+  }
+
+  if (x < -10) {
+    console.log('RIGHT!!!!!!');
+    sphere.position.x = parseInt(sphere.position.x) - (xInc);
+  }
+  else if ( x > 10) {
+    console.log('LEFT!!!!!!');
+    sphere.position.x = parseInt(sphere.position.x) + (xInc);
+  }
+}
+
+
+
+
+function scaleY(y){
+
+}
+
+window.addEventListener("deviceorientation", handleOrientation, true);
