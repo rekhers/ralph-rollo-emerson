@@ -19,6 +19,10 @@ function init(){
   scene = new THREE.Scene();
 
 
+  /* WINDOW RESIZE */
+  window.addEventListener( 'resize', onWindowResize, false );
+
+
   /* CAMERA */
 
   //Create a new Perspective Camera with four parameters
@@ -46,18 +50,52 @@ function init(){
   createSphere();
 
 
-  //This is very important, it will ask the renderer to render our scene
-  renderer.render(scene,camera);
+  // //This is very important, it will ask the renderer to render our scene
+  // renderer.render(scene,camera);
+
+
 
 };
 
-function createSphere(){
 
-var geometry = new THREE.SphereGeometry( 50, 32, 32 );
-var material = new THREE.MeshBasicMaterial( {color: 0x2194ce} );
-var sphere = new THREE.Mesh( geometry, material );
-scene.add( sphere );
+function createSphere() {
+  var geometry = new THREE.SphereBufferGeometry(100, 30, 30);
+  var material = new THREE.MeshLambertMaterial({
+    color: 0xfccdd3
+  });
+  sphere = new THREE.Mesh( geometry, material );
+  sphere.receiveShadow = true;
+
+  scene.add( sphere );
+
+  sphere.rotateZ(.3);
+
 };
 
-//Init our scene
+mveSpeed =4;
+
+
+//rotate and translate the sphere
+
+function animate() {
+
+    requestAnimationFrame(animate);
+
+    direction = sphere.getWorldDirection();
+
+    sphere.position.add(direction.multiplyScalar(4));
+
+    renderer.render( scene, camera );
+
+}
+
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
+//Initialize our scene
 init();
+animate();
