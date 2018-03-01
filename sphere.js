@@ -13,7 +13,6 @@ function init(){
   //Set the size of my renderer, I want it to be fullscreen
   renderer.setSize(ww,wh);
 
-
   /* SCENE */
 
   //Create my scene
