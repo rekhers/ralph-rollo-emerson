@@ -68,11 +68,7 @@ function createSphere() {
 
   scene.add( sphere );
 
-  sphere.rotateZ(.3);
-
 };
-
-mveSpeed =4;
 
 
 //rotate and translate the sphere
