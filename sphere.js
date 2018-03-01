@@ -70,6 +70,7 @@ function createSphere() {
 
 };
 
+var dxPerFrame = 1;
 
 //rotate and translate the sphere
 
@@ -77,12 +78,16 @@ function animate() {
 
     requestAnimationFrame(animate);
 
-    direction = sphere.getWorldDirection();
-
-    sphere.position.add(direction.multiplyScalar(4));
+    move()
 
     renderer.render( scene, camera );
 
+}
+
+function move(x) {
+  sphere.position.x += dxPerFrame; // move ball
+  if(sphere.position.x >  100) dxPerFrame = -1; // if we're too far right, move towards the left
+  if(sphere.position.x < -100) dxPerFrame =  1; // if we're too far left, move towards the right again
 }
 
 
