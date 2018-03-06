@@ -5,8 +5,13 @@
   "engines": {
     "node": "*"
   },
-  "main": "sphere.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
+    "ejs": "*",
+    "express": "^4.16.2",
     "heroku": "^0.2.0"
   }
 }
