@@ -76,7 +76,6 @@ function animate() {
 }
 
 function move(x) {
-  console.log(dxPerFrame);
   //sphere.position.x += dxPerFrame; // move ball
   //sphere.position.y += dyPerFrame; // move ball
 
@@ -107,10 +106,27 @@ function handleOrientation(event) {
   let y = event.beta;
   let x = event.gamma;
 
-  //TODO MAke this incremental
-  yInc = 2;
-  xInc = 2;
+  const scaleY = d3.scaleLinear()
+    .domain([45,90])
+    .range([90, -90]);
+  
+  const scaleYVelocity = d3.scaleLinear()
+    .domain([45,90])
+    .range([-1, 1]);
 
+  const scaleX = d3.scaleLinear()
+    .domain([-10,10])
+    .range([90, -90]);
+  
+  const scaleXVelocity = d3.scaleLinear()
+    .domain([-20,20])
+    .range([1, -1]);
+
+  // This particular code is terrible
+  sphere.position.y= parseInt(sphere.position.y) + d3.min([d3.max([scaleYVelocity(scaleY(y)), -3]),3]);
+  sphere.position.x= parseInt(sphere.position.x) + d3.min([d3.max([scaleXVelocity(scaleX(x)), -3]),3]);
+
+/*
   if (y > 55) {
     sphere.position.y= parseInt(sphere.position.y) - (yInc);
   }
@@ -126,13 +142,13 @@ function handleOrientation(event) {
     console.log('LEFT!!!!!!');
     sphere.position.x = parseInt(sphere.position.x) + (xInc);
   }
+  */
 }
 
-
-
-
-function scaleY(y){
-
+function recenter(){
+  sphere.position.y = 0;
+ sphere.position.x = 0;
 }
 
 window.addEventListener("deviceorientation", handleOrientation, true);
+window.addEventListener("touchstart", recenter, true);
