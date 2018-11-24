@@ -8,3 +8,5 @@ Run locally by setting up a simple http server with Node
 spin it up on the port of your preference
 
 `http-server . -p 8000`
+
+Let it roll!!!
