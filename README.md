@@ -9,4 +9,4 @@ spin it up on the port of your preference
 
 `http-server . -p 8000`
 
-Let it roll!!!
+Open it up on a mobile device and let it roll!!
